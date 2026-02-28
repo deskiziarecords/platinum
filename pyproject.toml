@@ -1,0 +1,11 @@
+[project]
+name = "platinum-os"
+version = "0.1.0"
+description = "Platinum Intelligent Operating System"
+authors = [{name = "J. Roberto Jimenez C."}]
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
