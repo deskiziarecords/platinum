@@ -3,25 +3,38 @@ from .safety import safety_check
 
 
 class ExecutionEngine:
+
     def __init__(self, registry):
         self.registry = registry
 
-    def call(self, tool_name: str, args: dict, context):
-        tool = self.registry.get(tool_name)
+    def execute_node(self, node, context):
+        tool = self.registry.get(node.tool_name)
         manifest = tool["manifest"]
         handler = tool["handler"]
 
-        # Safety check
         safety_check(manifest, context)
 
-        # Hardware routing
         device = route(manifest.requires.device)
         context.device = device
 
-        # Execute
-        result = handler(args, context)
+        result = handler(node.args, context)
 
-        # Metrics update
         context.metrics["calls"] += 1
-
         return result
+
+    def execute_graph(self, graph, context):
+        order = graph.topological_sort()
+
+        for node_id in order:
+            node = graph.nodes[node_id]
+
+            # Inject dependency results into args
+            for dep in node.dependencies:
+                node.args[f"dep_{dep}"] = graph.nodes[dep].result
+
+            node.result = self.execute_node(node, context)
+
+        return {
+            node_id: graph.nodes[node_id].result
+            for node_id in graph.nodes
+        }
