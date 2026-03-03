@@ -1,16 +1,25 @@
-from .router import route
-from .safety import safety_check
-
-
 class ExecutionEngine:
 
     def __init__(self, registry):
         self.registry = registry
+        self.cache = {}  # deterministic memoization
 
     def execute_node(self, node, context):
         tool = self.registry.get(node.tool_name)
         manifest = tool["manifest"]
         handler = tool["handler"]
+
+        # Create deterministic cache key
+        cache_key = (
+            node.tool_name,
+            tuple(sorted(node.args.items()))
+        )
+
+        if manifest.flags.deterministic and cache_key in self.cache:
+            return self.cache[cache_key]
+
+        from .safety import safety_check
+        from .router import route
 
         safety_check(manifest, context)
 
@@ -20,21 +29,8 @@ class ExecutionEngine:
         result = handler(node.args, context)
 
         context.metrics["calls"] += 1
+
+        if manifest.flags.deterministic:
+            self.cache[cache_key] = result
+
         return result
-
-    def execute_graph(self, graph, context):
-        order = graph.topological_sort()
-
-        for node_id in order:
-            node = graph.nodes[node_id]
-
-            # Inject dependency results into args
-            for dep in node.dependencies:
-                node.args[f"dep_{dep}"] = graph.nodes[dep].result
-
-            node.result = self.execute_node(node, context)
-
-        return {
-            node_id: graph.nodes[node_id].result
-            for node_id in graph.nodes
-        }
