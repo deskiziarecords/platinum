@@ -2,7 +2,7 @@ class GraphOptimizer:
 
     def __init__(self, registry):
         self.registry = registry
-        self.cache = {}
+   
 
     # -----------------------------
     # Entry Point
@@ -54,3 +54,4 @@ class GraphOptimizer:
                     del graph.nodes[node_id]
                 else:
                     seen[key] = node_id
+
