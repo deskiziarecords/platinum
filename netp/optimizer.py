@@ -1,4 +1,28 @@
-class GraphOptimizer:
+class OptimizationPipeline:
+
+    def __init__(self, registry, max_iterations=10):
+        self.registry = registry
+        self.passes = []
+        self.max_iterations = max_iterations
+
+    def register_pass(self, opt_pass):
+        self.passes.append(opt_pass)
+
+    def optimize(self, graph):
+        current_graph = graph.clone()
+
+        for _ in range(self.max_iterations):
+            previous_signature = current_graph.signature()
+
+            for opt_pass in self.passes:
+                current_graph = opt_pass.run(current_graph, self.registry)
+
+            new_signature = current_graph.signature()
+
+            if new_signature == previous_signature:
+                break  # Converged
+
+        return current_graphclass GraphOptimizer:
 
     def __init__(self, registry):
         self.registry = registry
