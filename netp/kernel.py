@@ -2,6 +2,7 @@ from .registry import ToolRegistry
 from .engine import ExecutionEngine
 from .context import RuntimeContext
 from .graph import ExecutionGraph
+from .optimizer import GraphOptimizer
 
 
 class NETPKernel:
