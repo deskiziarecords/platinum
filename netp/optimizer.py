@@ -1,4 +1,23 @@
-class OptimizationPipeline:
+def optimize(self, graph):
+    current_graph = graph.clone()
+    best_graph = current_graph
+    best_cost = self.cost_model.evaluate(current_graph)
+
+    for _ in range(self.max_iterations):
+        for opt_pass in self.passes:
+            candidate = opt_pass.run(current_graph, self.registry)
+
+            candidate_cost = self.cost_model.evaluate(candidate)
+
+            if candidate_cost < best_cost:
+                best_graph = candidate
+                best_cost = candidate_cost
+                current_graph = candidate
+
+        if current_graph.signature() == best_graph.signature():
+            break
+
+    return best_graph
 
     def __init__(self, registry, max_iterations=10):
         self.registry = registry
