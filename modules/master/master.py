@@ -206,7 +206,29 @@ class MasterOptimizer:
 
         return best
 
+# =====================================================
+# Adaptive Pass Entry
+# =====================================================
 
+class PassEntry:
+
+    def __init__(self, func):
+        self.func = func
+        self.times_called = 0
+        self.improvements = 0
+        self.cumulative_gain = 0.0
+
+    def record(self, gain):
+        self.times_called += 1
+        if gain > 0:
+            self.improvements += 1
+            self.cumulative_gain += gain
+
+    @property
+    def average_gain(self):
+        if self.improvements == 0:
+            return 0
+        return self.cumulative_gain / self.improvements
 # =====================================================
 # Example Integration
 # =====================================================
