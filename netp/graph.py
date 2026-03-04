@@ -1,3 +1,21 @@
+import hashlib
+import json
+
+
+def signature(self):
+    graph_repr = {
+        node_id: {
+            "tool": node.tool_name,
+            "args": node.args,
+            "deps": node.dependencies
+        }
+        for node_id, node in sorted(self.nodes.items())
+    }
+
+    serialized = json.dumps(graph_repr, sort_keys=True)
+    return hashlib.sha256(serialized.encode()).hexdigest()
+
+
 from collections import defaultdict, deque
 
 
