@@ -23,3 +23,14 @@ class ToolManifest:
     outputs: Dict[str, Any]
     requires: ToolRequirements = field(default_factory=ToolRequirements)
     flags: ToolFlags = field(default_factory=ToolFlags)
+    @dataclass
+class ToolCost:
+    time: float = 1.0
+    memory: float = 1.0
+    energy: float = 1.0
+
+
+@dataclass
+class ToolManifest:
+    ...
+    cost: ToolCost = field(default_factory=ToolCost)
