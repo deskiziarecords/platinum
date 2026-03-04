@@ -1,0 +1,38 @@
+class CostModel:
+
+    def __init__(self, registry, alpha=1.0, beta=0.5, gamma=0.3, delta=0.2):
+        self.registry = registry
+        self.alpha = alpha
+        self.beta = beta
+        self.gamma = gamma
+        self.delta = delta
+
+    def evaluate(self, graph):
+        total_time = 0
+        total_memory = 0
+        total_energy = 0
+        device_switch_penalty = 0
+
+        last_device = None
+
+        for node_id in graph.topological_sort():
+            node = graph.nodes[node_id]
+            tool = self.registry.get(node.tool_name)
+            manifest = tool["manifest"]
+
+            total_time += manifest.cost.time
+            total_memory += manifest.cost.memory
+            total_energy += manifest.cost.energy
+
+            device = manifest.requires.device
+            if last_device and device != last_device:
+                device_switch_penalty += 1
+
+            last_device = device
+
+        return (
+            self.alpha * total_time +
+            self.beta * total_memory +
+            self.gamma * device_switch_penalty +
+            self.delta * total_energy
+        )
