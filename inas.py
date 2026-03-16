@@ -17,6 +17,7 @@ class INAS:
             curiosity_thresh (float): Threshold to switch between Explore/Compress.
             mutation_window (int): Steps to look back for stagnation detection.
         """
+        self.physical_auditor = None  # Hook for Synth-Fuse
         # I. Core State Definition
         self.K = {}           # Concept weight map: {concept: weight}
         self.H = defaultdict(float) # Hypothesis strength map: {(c1, c2): strength}
@@ -65,7 +66,12 @@ class INAS:
 
         # 7. Structural Mutation (If stagnating)
         if self.mutation_condition():
-            self.Phi, self.K = self.structural_mutation(self.Phi, self.K)
+            # Entropy Duality Synergy: Query Synth-Fuse
+            if self.physical_auditor is None or self.physical_auditor.can_handle_mutation(1.0):
+                self.Phi, self.K = self.structural_mutation(self.Phi, self.K)
+            else:
+                print("[INAS] Mutation suppressed: Physical thermal limit reached (Synth-Fuse).")
+                self.G = "compress"  # Force compression to lower informational entropy
 
         # 8. Update Curiosity
         self.C = self.update_curiosity(self.C, idea)
