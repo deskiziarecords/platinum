@@ -4,15 +4,17 @@
 import math
 from collections import defaultdict
 
-# Attempt to import the INAS class from the previous file.
-# If running this as a standalone script without the file, ensure the class is defined.
+import sys
+import os
+
+# Add the parent directory to sys.path to import inas
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 try:
     from inas import INAS
 except ImportError:
-    print("Warning: 'inas.py' not found. Ensure the INAS class is available.")
-    # Mock class for demonstration if import fails (remove if using actual file)
-    class INAS: 
-        def __init__(self): self.K = {}; self.H = defaultdict(float); self.Phi = (set(), defaultdict(float)); self.C = 0.5; self.J = 0.0
+    print("Error: 'inas.py' not found in the parent directory.")
+    sys.exit(1)
 
 class INASBridge:
     """
