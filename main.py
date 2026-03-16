@@ -1,4 +1,4 @@
-from platinum.os import PlatinumOS
+from os_core import PlatinumOS
 import time
 
 if __name__ == "__main__":

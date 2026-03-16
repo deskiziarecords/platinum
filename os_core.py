@@ -1,13 +1,13 @@
-from platinum.core.spine import RGKMSpine
-from platinum.core.entropy import EntropyCap
-from platinum.hardware.backend import HardwareBackend
-from platinum.letters.library import LettersLibrary
-from platinum.netp.protocol import NETP
-from platinum.memory.orbitals import MemoryOrbitals
-from platinum.modules.factory import Factory
-from platinum.modules.lab import Lab
-from platinum.modules.observatory import Observatory
-from platinum.modules.core_module import CoreModule
+from core.spine import RGKMSpine
+from core.entropy import EntropyCap
+from core.memory import MemoryOrbitals
+from hardware.backend import HardwareBackend
+from letters.library import LettersLibrary
+from netp.protocol import NETP
+from modules.factory import Factory
+from modules.lab import Lab
+from modules.observatory import Observatory
+from modules.core_module import CoreModule
 
 
 class PlatinumOS:

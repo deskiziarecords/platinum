@@ -126,7 +126,7 @@ class INAS:
 
         for c_i, c_j in pairs:
             # Calculate strength based on weights
-            strength = (K[c_i] + K[j]) / 2.0
+            strength = (K[c_i] + K[c_j]) / 2.0
             
             # Update persistent H map (or add to buffer)
             # Here we update the persistent H directly for simplicity
@@ -263,7 +263,7 @@ class INAS:
         # Increase complexity counter (implied by adding nodes)
         print(f"[Mutation] Created abstraction: {meta_name}")
         
-        return (V, K)
+        return (V, E), K
 
     # ---------------------------------------------------------
     # X. Curiosity Update
