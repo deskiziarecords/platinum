@@ -2,26 +2,26 @@
 
 Platinum OS is a next-generation, intelligent operating system core designed to act as a bridge between complex systems. It combines cognitive abstraction (INAS), a neural tool protocol (NETP), and a self-rewriting core (RGKM Spine) to create an adaptive environment for intelligent agents and specialized hardware.
 
-## 🚀 Core Features
+## Core Features
 
-### 🧠 INAS (Intelligent Neural Abstraction System)
+### INAS (Intelligent Neural Abstraction System)
 The "brain" of the system. INAS ingests concepts, generates hypotheses, and builds a relational graph. It features:
 - **Curiosity-Driven Learning:** Dynamically switches between "Explore" and "Compress" goals.
 - **Structural Mutation:** Automatically creates hierarchical abstractions (Meta-concepts) when performance stagnates.
 - **Semantic Bridging:** Facilitates knowledge synchronization between independent agents.
 
-### 🛠️ NETP (Neural Embedded Tool Protocol)
+### NETP (Neural Embedded Tool Protocol)
 A unified protocol for tool registration and execution. It allows the OS to interact with external repos, modules, and hardware backends seamlessly.
 
-### ⚡ RGKM Spine & Hardware Abstraction
+### RGKM Spine & Hardware Abstraction
 - **Self-Rewriting Core:** The system's state evolves over time, optimizing for efficiency while monitoring "Purity."
 - **Bekenstein-Hawking Entropy Cap:** Mathematically enforces stability by limiting system entropy.
 - **Multi-Backend Support:** Automatically detects and routes computations to CPU, GPU, or TPU.
 
-### 📚 140 Letters (Algorithm Primitives)
+### 140 Letters (Algorithm Primitives)
 A library of 140 fundamental algorithm primitives (Letters) categorized into Optimization, Inference, Memory, Entropy, and more.
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 ├── core/               # OS Core logic (Spine, Entropy, Memory)
@@ -61,7 +61,7 @@ To test semantic bridging between agents:
 python3 lab/INASbridge.py
 ```
 
-## 🔬 Architecture Highlights
+## Architecture Highlights
 
 - **Kinetic Memory Orbitals:** A 12-layer memory system for tiered data storage.
 - **Godel Stabilizer:** Ensures self-consistency of the system state during rewrite cycles.
