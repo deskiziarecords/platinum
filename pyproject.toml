@@ -6,6 +6,16 @@ authors = [{name = "J. Roberto Jimenez C."}]
 requires-python = ">=3.10"
 dependencies = []
 
+[project.optional-dependencies]
+# Physical-entropy backend for core/physical_entropy.py (opt-in at runtime via
+# PLATINUM_THERMAL_BACKEND=synthfuse).
+synthfuse = ["synthfuse>=0.2"]
+# netp/router.py imports torch for device detection.
+gpu = ["torch>=2.0"]
+# lab/ kernels and modules/self-contained-example.py use JAX.
+jax = ["jax>=0.4"]
+all = ["synthfuse>=0.2", "torch>=2.0", "jax>=0.4"]
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
